@@ -13,16 +13,19 @@ TG_CHAT_ID = os.getenv('TG_CHAT_ID')
 def wait(chat_id, question):
     parsing = parse(question)
     bot.create_countdown(parsing, notify_progress, author_id=chat_id)
-    bot.create_timer(parsing, choose, chat_id=chat_id)
-    
+    message_id = bot.send_message(TG_CHAT_ID, "Моё сообщение")
+    bot.create_timer(parsing, choose, author_id=chat_id)
+    print('ID сообщения', message_id)
 
 
 def notify_progress(secs_left, author_id):
-    bot.send_message(author_id, "Осталось {} секунд!".format(secs_left))
+    # message_id = bot.send_message(author_id, "Осталось {} секунд!".format(secs_left))
+    bot.update_message(author_id, message_id, "Осталось {} секунд!".format(secs_left))
 
 
-def choose(chat_id):
-    bot.send_message(chat_id, 'Время вышло')
+
+def choose(author_id):
+    bot.send_message(author_id, 'Время вышло')
 
 
 
@@ -30,7 +33,4 @@ def choose(chat_id):
 bot = ptbot.Bot(TG_TOKEN)
 bot.reply_on_message(wait)
 bot.run_bot()
-
-
-
 
