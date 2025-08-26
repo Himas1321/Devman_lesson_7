@@ -16,13 +16,13 @@ def wait(chat_id, question):
     parsing = parse(question)
     message_id = bot.send_message(chat_id, "Моё сообщение")
     bot.create_countdown(parsing, notify_progress,
-                        chat_id=chat_id, message_id=message_id, parsing=parsing)
+                        chat_id=chat_id, message_id=message_id)
     bot.create_timer(parsing, choose, chat_id=chat_id)
 
 
-def notify_progress(secs_left, chat_id, message_id, parsing):
+def notify_progress(secs_left, chat_id, message_id):
     bot.update_message(chat_id, message_id, "Осталось {} секунд!".format(secs_left))
-    progressbar = render_progressbar(total, iteration, prefix='', suffix='', length=30, fill='█', zfill='░')
+   
 
 
 def choose(chat_id):
@@ -45,4 +45,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
