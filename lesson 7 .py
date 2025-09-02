@@ -15,13 +15,14 @@ bot = ptbot.Bot(TG_TOKEN)
 def reply(chat_id, question):
     parsing = parse(question)
     message_id = bot.send_message(chat_id, "Запуск таймера")
-    bot.create_countdown(parsing, notify,
-                        chat_id=chat_id, message_id=message_id, parsing=parsing)
+    bot.create_countdown(parsing, notify, chat_id=chat_id, 
+                         message_id=message_id, parsing=parsing)
     bot.create_timer(parsing, choose, chat_id=chat_id)
 
-def notify(secs_left, chat_id, message_id, parsing):
-    bot.update_message(chat_id, message_id, "Осталось {} секунд!" "/n{}" .format(secs_left, render_progressbar(parsing, secs_left )))
 
+def notify(secs_left, chat_id, message_id, parsing):
+    bot.update_message(chat_id, message_id, "Осталось {} секунд! \n {}" .format(secs_left, render_progressbar(parsing, secs_left )))
+    
 
 def choose(chat_id):
     bot.send_message(chat_id, 'Время вышло')
