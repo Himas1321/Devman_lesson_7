@@ -4,11 +4,12 @@ import os
 import random
 from pytimeparse import parse
 
-load_dotenv()
 
 TG_TOKEN = os.getenv('TG_TOKEN') 
 TG_CHAT_ID = os.getenv('TG_CHAT_ID')
 
+
+load_dotenv()
 bot = ptbot.Bot(TG_TOKEN)
 
 
@@ -44,7 +45,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
 
