@@ -5,28 +5,20 @@ import random
 from pytimeparse import parse
 
 
-load_dotenv()
-
-
-TG_TOKEN = os.getenv('TG_TOKEN') 
-TG_CHAT_ID = os.getenv('TG_CHAT_ID')
-BOT = ptbot.Bot(TG_TOKEN)
-
-
 def reply(chat_id, question):
     parsing = parse(question)
-    message_id = BOT.send_message(chat_id, "Запуск таймера")
-    BOT.create_countdown(parsing, notify, chat_id=chat_id, 
+    message_id = bot.send_message(chat_id, "Запуск таймера")
+    bot.create_countdown(parsing, notify, chat_id=chat_id, 
                          message_id=message_id, parsing=parsing)
-    BOT.create_timer(parsing, choose, chat_id=chat_id)
+    bot.create_timer(parsing, choose, chat_id=chat_id)
 
 
 def notify(secs_left, chat_id, message_id, parsing):
-    BOT.update_message(chat_id, message_id, "Осталось {} секунд! \n {}" .format(secs_left, render_progressbar(parsing, secs_left )))
+    bot.update_message(chat_id, message_id, "Осталось {} секунд! \n {}" .format(secs_left, render_progressbar(parsing, secs_left )))
     
 
 def choose(chat_id):
-    BOT.send_message(chat_id, 'Время вышло')
+    bot.send_message(chat_id, 'Время вышло')
 
 
 def render_progressbar(total, iteration, prefix='', suffix='', length=30, fill='█', zfill='░'):
@@ -38,11 +30,13 @@ def render_progressbar(total, iteration, prefix='', suffix='', length=30, fill='
     return '{0} |{1}| {2}% {3}'.format(prefix, pbar, percent, suffix)
 
 
-def main():
-    BOT.reply_on_message(reply)
-    BOT.run_bot()
-    
-
 if __name__ == '__main__':
-    main()
+    load_dotenv()
+    tg_token = os.getenv('TG_TOKEN') 
+    tg_chat_id = os.getenv('TG_CHAT_ID')
+    bot = ptbot.Bot(tg_token)
+    bot.reply_on_message(reply)
+    bot.run_bot()
+
+
 
